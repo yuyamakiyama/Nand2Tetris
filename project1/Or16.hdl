@@ -1,7 +1,7 @@
 // This file is part of www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
-// File name: projects/1/Or16.hdl
+// File name: project1/Or16.hdl
 /**
  * 16-bit Or gate:
  * for i = 0, ..., 15:
@@ -12,7 +12,6 @@ CHIP Or16 {
     OUT out[16];
 
     PARTS:
-    //// Replace this comment with your code.
     Or(a=a[0], b=b[0],out=out[0]);
     Or(a=a[1], b=b[1],out=out[1]);
     Or(a=a[2], b=b[2],out=out[2]);
