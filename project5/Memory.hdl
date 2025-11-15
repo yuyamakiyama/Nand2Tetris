@@ -1,7 +1,7 @@
 // This file is part of www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
-// File name: projects/5/Memory.hdl
+// File name: project5/Memory.hdl
 /**
  * The complete address space of the Hack computer's memory,
  * including RAM and memory-mapped I/O. 
@@ -25,11 +25,10 @@ CHIP Memory {
     OUT out[16];
 
     PARTS:
-	//// Replace this comment with your code.
-DMux(in=load, sel=address[14], a=a, b=b);
+    DMux(in=load, sel=address[14], a=a, b=b);
 
-RAM16K(in=in,load=a,address=address[0..13],out=oa);
-RAM16K(in=in,load=b,address=address[0..13],out=ob);
+    RAM16K(in=in,load=a,address=address[0..13],out=oa);
+    RAM16K(in=in,load=b,address=address[0..13],out=ob);
 
-Mux16(a=oa, b=ob, sel=address[14], out=out);
+    Mux16(a=oa, b=ob, sel=address[14], out=out);
 }
