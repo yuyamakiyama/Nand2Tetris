@@ -1,7 +1,7 @@
 // This file is part of www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
-// File name: projects/3/a/RAM64.hdl
+// File name: project3/RAM64.hdl
 /**
  * Memory of sixty four 16-bit registers.
  * If load is asserted, the value of the register selected by
@@ -13,7 +13,6 @@ CHIP RAM64 {
     OUT out[16];
 
     PARTS:
-    //// Replace this comment with your code.
     DMux8Way(in=load, sel=address[0..2], a=a, b=b, c=c, d=d, e=e, f=f, g=g, h=h);
 
     RAM8(in=in, load=a, address=address[3..5], out=aout);
