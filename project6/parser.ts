@@ -67,7 +67,7 @@ export class Parser {
     }
     // Extract dest part before = (e.g., "M=D+1" => "M")
     const match = instruction.match(/^([^=;]+)=/);
-    return match ? (match[1] ?? "") : "";
+    return match ? match[1] ?? "" : "";
   }
 
   comp(): string {
@@ -78,7 +78,7 @@ export class Parser {
     // Extract comp part: between = and ;, or everything if no = or ;
     // Examples: "M=D+1;JGT" => "D+1", "0;JMP" => "0", "D" => "D"
     const match = instruction.match(/(?:^|=)([^;=]+)(?:;|$)/);
-    return match ? (match[1] ?? "") : "";
+    return match ? match[1] ?? "" : "";
   }
 
   jump(): string {
@@ -88,6 +88,6 @@ export class Parser {
     }
     // Extract jump part after ; (e.g., "D=M;JGT" => "JGT")
     const match = instruction.match(/;(.+)$/);
-    return match ? (match[1] ?? "") : "";
+    return match ? match[1] ?? "" : "";
   }
 }
