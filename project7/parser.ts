@@ -17,7 +17,7 @@ export class Parser {
     this.lines = content
       .split("\n")
       .map((line) => {
-        const trimmedLine = line.trim();
+        const trimmedLine = line.split("//")[0]?.trim() ?? "";
         if (trimmedLine === "" || trimmedLine.startsWith("//")) return;
         return trimmedLine;
       })
