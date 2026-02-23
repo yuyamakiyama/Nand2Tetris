@@ -1,0 +1,556 @@
+function PieceData.init 0
+    push constant 112
+    call Array.new 1
+    pop static 0
+    push constant 112
+    call Array.new 1
+    pop static 1
+    push constant 0
+    push constant 1
+    neg
+    push constant 0
+    push constant 1
+    push constant 2
+    call PieceData.setX 5
+    pop temp 0
+    push constant 0
+    push constant 0
+    push constant 0
+    push constant 0
+    push constant 0
+    call PieceData.setY 5
+    pop temp 0
+    push constant 4
+    push constant 0
+    push constant 0
+    push constant 0
+    push constant 0
+    call PieceData.setX 5
+    pop temp 0
+    push constant 4
+    push constant 1
+    neg
+    push constant 0
+    push constant 1
+    push constant 2
+    call PieceData.setY 5
+    pop temp 0
+    push constant 8
+    push constant 1
+    neg
+    push constant 0
+    push constant 1
+    push constant 2
+    call PieceData.setX 5
+    pop temp 0
+    push constant 8
+    push constant 0
+    push constant 0
+    push constant 0
+    push constant 0
+    call PieceData.setY 5
+    pop temp 0
+    push constant 12
+    push constant 0
+    push constant 0
+    push constant 0
+    push constant 0
+    call PieceData.setX 5
+    pop temp 0
+    push constant 12
+    push constant 1
+    neg
+    push constant 0
+    push constant 1
+    push constant 2
+    call PieceData.setY 5
+    pop temp 0
+    push constant 16
+    push constant 0
+    push constant 1
+    push constant 0
+    push constant 1
+    call PieceData.setX 5
+    pop temp 0
+    push constant 16
+    push constant 0
+    push constant 0
+    push constant 1
+    push constant 1
+    call PieceData.setY 5
+    pop temp 0
+    push constant 20
+    push constant 0
+    push constant 1
+    push constant 0
+    push constant 1
+    call PieceData.setX 5
+    pop temp 0
+    push constant 20
+    push constant 0
+    push constant 0
+    push constant 1
+    push constant 1
+    call PieceData.setY 5
+    pop temp 0
+    push constant 24
+    push constant 0
+    push constant 1
+    push constant 0
+    push constant 1
+    call PieceData.setX 5
+    pop temp 0
+    push constant 24
+    push constant 0
+    push constant 0
+    push constant 1
+    push constant 1
+    call PieceData.setY 5
+    pop temp 0
+    push constant 28
+    push constant 0
+    push constant 1
+    push constant 0
+    push constant 1
+    call PieceData.setX 5
+    pop temp 0
+    push constant 28
+    push constant 0
+    push constant 0
+    push constant 1
+    push constant 1
+    call PieceData.setY 5
+    pop temp 0
+    push constant 32
+    push constant 1
+    neg
+    push constant 0
+    push constant 1
+    push constant 0
+    call PieceData.setX 5
+    pop temp 0
+    push constant 32
+    push constant 0
+    push constant 0
+    push constant 0
+    push constant 1
+    call PieceData.setY 5
+    pop temp 0
+    push constant 36
+    push constant 0
+    push constant 0
+    push constant 1
+    neg
+    push constant 0
+    call PieceData.setX 5
+    pop temp 0
+    push constant 36
+    push constant 1
+    neg
+    push constant 0
+    push constant 0
+    push constant 1
+    call PieceData.setY 5
+    pop temp 0
+    push constant 40
+    push constant 1
+    neg
+    push constant 0
+    push constant 1
+    push constant 0
+    call PieceData.setX 5
+    pop temp 0
+    push constant 40
+    push constant 0
+    push constant 0
+    push constant 0
+    push constant 1
+    neg
+    call PieceData.setY 5
+    pop temp 0
+    push constant 44
+    push constant 0
+    push constant 0
+    push constant 1
+    push constant 0
+    call PieceData.setX 5
+    pop temp 0
+    push constant 44
+    push constant 1
+    neg
+    push constant 0
+    push constant 0
+    push constant 1
+    call PieceData.setY 5
+    pop temp 0
+    push constant 48
+    push constant 0
+    push constant 1
+    push constant 1
+    neg
+    push constant 0
+    call PieceData.setX 5
+    pop temp 0
+    push constant 48
+    push constant 0
+    push constant 0
+    push constant 1
+    push constant 1
+    call PieceData.setY 5
+    pop temp 0
+    push constant 52
+    push constant 0
+    push constant 0
+    push constant 1
+    push constant 1
+    call PieceData.setX 5
+    pop temp 0
+    push constant 52
+    push constant 1
+    neg
+    push constant 0
+    push constant 0
+    push constant 1
+    call PieceData.setY 5
+    pop temp 0
+    push constant 56
+    push constant 0
+    push constant 1
+    push constant 1
+    neg
+    push constant 0
+    call PieceData.setX 5
+    pop temp 0
+    push constant 56
+    push constant 0
+    push constant 0
+    push constant 1
+    push constant 1
+    call PieceData.setY 5
+    pop temp 0
+    push constant 60
+    push constant 0
+    push constant 0
+    push constant 1
+    push constant 1
+    call PieceData.setX 5
+    pop temp 0
+    push constant 60
+    push constant 1
+    neg
+    push constant 0
+    push constant 0
+    push constant 1
+    call PieceData.setY 5
+    pop temp 0
+    push constant 64
+    push constant 1
+    neg
+    push constant 0
+    push constant 0
+    push constant 1
+    call PieceData.setX 5
+    pop temp 0
+    push constant 64
+    push constant 0
+    push constant 0
+    push constant 1
+    push constant 1
+    call PieceData.setY 5
+    pop temp 0
+    push constant 68
+    push constant 1
+    push constant 0
+    push constant 1
+    push constant 0
+    call PieceData.setX 5
+    pop temp 0
+    push constant 68
+    push constant 1
+    neg
+    push constant 0
+    push constant 0
+    push constant 1
+    call PieceData.setY 5
+    pop temp 0
+    push constant 72
+    push constant 1
+    neg
+    push constant 0
+    push constant 0
+    push constant 1
+    call PieceData.setX 5
+    pop temp 0
+    push constant 72
+    push constant 0
+    push constant 0
+    push constant 1
+    push constant 1
+    call PieceData.setY 5
+    pop temp 0
+    push constant 76
+    push constant 1
+    push constant 0
+    push constant 1
+    push constant 0
+    call PieceData.setX 5
+    pop temp 0
+    push constant 76
+    push constant 1
+    neg
+    push constant 0
+    push constant 0
+    push constant 1
+    call PieceData.setY 5
+    pop temp 0
+    push constant 80
+    push constant 1
+    neg
+    push constant 0
+    push constant 1
+    push constant 1
+    call PieceData.setX 5
+    pop temp 0
+    push constant 80
+    push constant 0
+    push constant 0
+    push constant 0
+    push constant 1
+    neg
+    call PieceData.setY 5
+    pop temp 0
+    push constant 84
+    push constant 0
+    push constant 0
+    push constant 0
+    push constant 1
+    call PieceData.setX 5
+    pop temp 0
+    push constant 84
+    push constant 1
+    neg
+    push constant 0
+    push constant 1
+    push constant 1
+    call PieceData.setY 5
+    pop temp 0
+    push constant 88
+    push constant 1
+    neg
+    push constant 1
+    neg
+    push constant 0
+    push constant 1
+    call PieceData.setX 5
+    pop temp 0
+    push constant 88
+    push constant 1
+    push constant 0
+    push constant 0
+    push constant 0
+    call PieceData.setY 5
+    pop temp 0
+    push constant 92
+    push constant 1
+    neg
+    push constant 0
+    push constant 0
+    push constant 0
+    call PieceData.setX 5
+    pop temp 0
+    push constant 92
+    push constant 1
+    neg
+    push constant 1
+    neg
+    push constant 0
+    push constant 1
+    call PieceData.setY 5
+    pop temp 0
+    push constant 96
+    push constant 1
+    neg
+    push constant 1
+    neg
+    push constant 0
+    push constant 1
+    call PieceData.setX 5
+    pop temp 0
+    push constant 96
+    push constant 1
+    neg
+    push constant 0
+    push constant 0
+    push constant 0
+    call PieceData.setY 5
+    pop temp 0
+    push constant 100
+    push constant 0
+    push constant 1
+    push constant 0
+    push constant 0
+    call PieceData.setX 5
+    pop temp 0
+    push constant 100
+    push constant 1
+    neg
+    push constant 1
+    neg
+    push constant 0
+    push constant 1
+    call PieceData.setY 5
+    pop temp 0
+    push constant 104
+    push constant 1
+    neg
+    push constant 0
+    push constant 1
+    push constant 1
+    call PieceData.setX 5
+    pop temp 0
+    push constant 104
+    push constant 0
+    push constant 0
+    push constant 0
+    push constant 1
+    call PieceData.setY 5
+    pop temp 0
+    push constant 108
+    push constant 0
+    push constant 0
+    push constant 1
+    neg
+    push constant 0
+    call PieceData.setX 5
+    pop temp 0
+    push constant 108
+    push constant 1
+    neg
+    push constant 0
+    push constant 1
+    push constant 1
+    call PieceData.setY 5
+    pop temp 0
+    push constant 0
+    return
+function PieceData.setX 0
+    push argument 0
+    push static 0
+    add
+    push argument 1
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push argument 0
+    push constant 1
+    add
+    push static 0
+    add
+    push argument 2
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push argument 0
+    push constant 2
+    add
+    push static 0
+    add
+    push argument 3
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push argument 0
+    push constant 3
+    add
+    push static 0
+    add
+    push argument 4
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push constant 0
+    return
+function PieceData.setY 0
+    push argument 0
+    push static 1
+    add
+    push argument 1
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push argument 0
+    push constant 1
+    add
+    push static 1
+    add
+    push argument 2
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push argument 0
+    push constant 2
+    add
+    push static 1
+    add
+    push argument 3
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push argument 0
+    push constant 3
+    add
+    push static 1
+    add
+    push argument 4
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push constant 0
+    return
+function PieceData.getX 0
+    push argument 0
+    push constant 16
+    call Math.multiply 2
+    push argument 1
+    push constant 4
+    call Math.multiply 2
+    add
+    push argument 2
+    add
+    push static 0
+    add
+    pop pointer 1
+    push that 0
+    return
+function PieceData.getY 0
+    push argument 0
+    push constant 16
+    call Math.multiply 2
+    push argument 1
+    push constant 4
+    call Math.multiply 2
+    add
+    push argument 2
+    add
+    push static 1
+    add
+    pop pointer 1
+    push that 0
+    return
+function PieceData.dispose 0
+    push static 0
+    call Array.dispose 1
+    pop temp 0
+    push static 1
+    call Array.dispose 1
+    pop temp 0
+    push constant 0
+    return

@@ -1,0 +1,112 @@
+// Index formula: type * 16 + rotation * 4 + block
+class PieceData {
+    static Array xOff;
+    static Array yOff;
+
+    function void init() {
+        let xOff = Array.new(112);
+        let yOff = Array.new(112);
+
+        // I-piece
+        do PieceData.setX(0, -1, 0, 1, 2);
+        do PieceData.setY(0,  0, 0, 0, 0);
+        do PieceData.setX(4, 0, 0, 0, 0);
+        do PieceData.setY(4, -1, 0, 1, 2);
+        do PieceData.setX(8, -1, 0, 1, 2);
+        do PieceData.setY(8,  0, 0, 0, 0);
+        do PieceData.setX(12, 0, 0, 0, 0);
+        do PieceData.setY(12, -1, 0, 1, 2);
+
+        // O-piece
+        do PieceData.setX(16, 0, 1, 0, 1);
+        do PieceData.setY(16, 0, 0, 1, 1);
+        do PieceData.setX(20, 0, 1, 0, 1);
+        do PieceData.setY(20, 0, 0, 1, 1);
+        do PieceData.setX(24, 0, 1, 0, 1);
+        do PieceData.setY(24, 0, 0, 1, 1);
+        do PieceData.setX(28, 0, 1, 0, 1);
+        do PieceData.setY(28, 0, 0, 1, 1);
+
+        // T-piece
+        do PieceData.setX(32, -1, 0, 1, 0);
+        do PieceData.setY(32,  0, 0, 0, 1);
+        do PieceData.setX(36, 0, 0, -1, 0);
+        do PieceData.setY(36, -1, 0, 0, 1);
+        do PieceData.setX(40, -1, 0, 1, 0);
+        do PieceData.setY(40,  0, 0, 0, -1);
+        do PieceData.setX(44, 0, 0, 1, 0);
+        do PieceData.setY(44, -1, 0, 0, 1);
+
+        // S-piece
+        do PieceData.setX(48, 0, 1, -1, 0);
+        do PieceData.setY(48, 0, 0, 1, 1);
+        do PieceData.setX(52, 0, 0, 1, 1);
+        do PieceData.setY(52, -1, 0, 0, 1);
+        do PieceData.setX(56, 0, 1, -1, 0);
+        do PieceData.setY(56, 0, 0, 1, 1);
+        do PieceData.setX(60, 0, 0, 1, 1);
+        do PieceData.setY(60, -1, 0, 0, 1);
+
+        // Z-piece
+        do PieceData.setX(64, -1, 0, 0, 1);
+        do PieceData.setY(64,  0, 0, 1, 1);
+        do PieceData.setX(68, 1, 0, 1, 0);
+        do PieceData.setY(68, -1, 0, 0, 1);
+        do PieceData.setX(72, -1, 0, 0, 1);
+        do PieceData.setY(72,  0, 0, 1, 1);
+        do PieceData.setX(76, 1, 0, 1, 0);
+        do PieceData.setY(76, -1, 0, 0, 1);
+
+        // L-piece
+        do PieceData.setX(80, -1, 0, 1, 1);
+        do PieceData.setY(80,  0, 0, 0, -1);
+        do PieceData.setX(84, 0, 0, 0, 1);
+        do PieceData.setY(84, -1, 0, 1, 1);
+        do PieceData.setX(88, -1, -1, 0, 1);
+        do PieceData.setY(88,  1, 0, 0, 0);
+        do PieceData.setX(92, -1, 0, 0, 0);
+        do PieceData.setY(92, -1, -1, 0, 1);
+
+        // J-piece
+        do PieceData.setX(96, -1, -1, 0, 1);
+        do PieceData.setY(96, -1, 0, 0, 0);
+        do PieceData.setX(100, 0, 1, 0, 0);
+        do PieceData.setY(100, -1, -1, 0, 1);
+        do PieceData.setX(104, -1, 0, 1, 1);
+        do PieceData.setY(104,  0, 0, 0, 1);
+        do PieceData.setX(108, 0, 0, -1, 0);
+        do PieceData.setY(108, -1, 0, 1, 1);
+
+        return;
+    }
+
+    function void setX(int i, int x0, int x1, int x2, int x3) {
+        let xOff[i] = x0;
+        let xOff[i + 1] = x1;
+        let xOff[i + 2] = x2;
+        let xOff[i + 3] = x3;
+        return;
+    }
+
+    function void setY(int i, int y0, int y1, int y2, int y3) {
+        let yOff[i] = y0;
+        let yOff[i + 1] = y1;
+        let yOff[i + 2] = y2;
+        let yOff[i + 3] = y3;
+        return;
+    }
+
+    function int getX(int t, int r, int b) {
+        return xOff[(t * 16) + (r * 4) + b];
+    }
+
+    function int getY(int t, int r, int b) {
+        return yOff[(t * 16) + (r * 4) + b];
+    }
+
+    function void dispose() {
+        do xOff.dispose();
+        do yOff.dispose();
+        return;
+    }
+}

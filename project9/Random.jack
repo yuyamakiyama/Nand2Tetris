@@ -1,0 +1,22 @@
+class Random {
+    static int seed;
+
+    function void init(int s) {
+        let seed = s;
+        return;
+    }
+
+    function int next() {
+        let seed = (seed * 181) + 359;
+        if (seed < 0) {
+            let seed = -(seed + 1);
+        }
+        return seed;
+    }
+
+    function int nextBounded(int n) {
+        var int val;
+        let val = Random.next();
+        return val - ((val / n) * n);
+    }
+}

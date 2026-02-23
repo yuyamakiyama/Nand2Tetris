@@ -1,0 +1,158 @@
+class Board {
+    field Array grid;
+
+    static int boardX;
+    static int boardY;
+    static int cellSize;
+
+    constructor Board new() {
+        var int i;
+        let boardX = 10;
+        let boardY = 8;
+        let cellSize = 12;
+
+        let grid = Array.new(200);
+        let i = 0;
+        while (i < 200) {
+            let grid[i] = 0;
+            let i = i + 1;
+        }
+        return this;
+    }
+
+    method void dispose() {
+        do grid.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method int getCell(int col, int row) {
+        return grid[(row * 10) + col];
+    }
+
+    method void setCell(int col, int row, int val) {
+        let grid[(row * 10) + col] = val;
+        return;
+    }
+
+    // Cells above the board (y < 0) are treated as valid to allow spawning
+    method boolean canPlace(int pieceType, int rotation, int px, int py) {
+        var int i, cx, cy;
+        let i = 0;
+        while (i < 4) {
+            let cx = px + PieceData.getX(pieceType, rotation, i);
+            let cy = py + PieceData.getY(pieceType, rotation, i);
+            if ((cx < 0) | (cx > 9)) {
+                return false;
+            }
+            if (cy > 19) {
+                return false;
+            }
+            if (cy > -1) {
+                if (~(grid[(cy * 10) + cx] = 0)) {
+                    return false;
+                }
+            }
+            let i = i + 1;
+        }
+        return true;
+    }
+
+    method void lockPiece(int pieceType, int rotation, int px, int py) {
+        var int i, cx, cy;
+        let i = 0;
+        while (i < 4) {
+            let cx = px + PieceData.getX(pieceType, rotation, i);
+            let cy = py + PieceData.getY(pieceType, rotation, i);
+            if ((cy > -1) & (cy < 20)) {
+                let grid[(cy * 10) + cx] = 1;
+                do drawCell(cx, cy, true);
+            }
+            let i = i + 1;
+        }
+        return;
+    }
+
+    method int clearLines() {
+        var int row, col, linesCleared;
+        var boolean full;
+        var int srcRow;
+
+        let linesCleared = 0;
+        let row = 19;
+
+        while (row > -1) {
+            let full = true;
+            let col = 0;
+            while (col < 10) {
+                if (grid[(row * 10) + col] = 0) {
+                    let full = false;
+                }
+                let col = col + 1;
+            }
+
+            if (full) {
+                let linesCleared = linesCleared + 1;
+                let srcRow = row - 1;
+                while (srcRow > -1) {
+                    let col = 0;
+                    while (col < 10) {
+                        let grid[((srcRow + 1) * 10) + col] = grid[(srcRow * 10) + col];
+                        let col = col + 1;
+                    }
+                    let srcRow = srcRow - 1;
+                }
+                let col = 0;
+                while (col < 10) {
+                    let grid[col] = 0;
+                    let col = col + 1;
+                }
+                // Re-check this row since a new row shifted into it
+            } else {
+                let row = row - 1;
+            }
+        }
+
+        if (linesCleared > 0) {
+            do drawAll();
+        }
+
+        return linesCleared;
+    }
+
+    method void drawCell(int col, int row, boolean color) {
+        var int x1, y1;
+        let x1 = boardX + (col * cellSize);
+        let y1 = boardY + (row * cellSize);
+        do Screen.setColor(color);
+        do Screen.drawRectangle(x1, y1, x1 + 10, y1 + 10);
+        return;
+    }
+
+    method void drawAll() {
+        var int row, col;
+        let row = 0;
+        while (row < 20) {
+            let col = 0;
+            while (col < 10) {
+                if (grid[(row * 10) + col] = 0) {
+                    do drawCell(col, row, false);
+                } else {
+                    do drawCell(col, row, true);
+                }
+                let col = col + 1;
+            }
+            let row = row + 1;
+        }
+        return;
+    }
+
+    method void drawBorder() {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(boardX - 1, boardY - 1, boardX + (10 * cellSize), boardY - 1);
+        do Screen.drawRectangle(boardX - 1, boardY + (20 * cellSize), boardX + (10 * cellSize), boardY + (20 * cellSize));
+        do Screen.drawRectangle(boardX - 1, boardY - 1, boardX - 1, boardY + (20 * cellSize));
+        do Screen.drawRectangle(boardX + (10 * cellSize), boardY - 1, boardX + (10 * cellSize), boardY + (20 * cellSize));
+        return;
+    }
+}

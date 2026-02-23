@@ -1,0 +1,157 @@
+class Piece {
+    field int pieceType;
+    field int rotation;
+    field int posX, posY;
+
+    static int boardX;
+    static int boardY;
+    static int cellSize;
+
+    constructor Piece new(int type) {
+        let boardX = 10;
+        let boardY = 8;
+        let cellSize = 12;
+        let pieceType = type;
+        let rotation = 0;
+        let posX = 4;
+        let posY = 0;
+        return this;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method int getType() { return pieceType; }
+    method int getRotation() { return rotation; }
+    method int getX() { return posX; }
+    method int getY() { return posY; }
+
+    method void setPosition(int x, int y) {
+        let posX = x;
+        let posY = y;
+        return;
+    }
+
+    method void draw() {
+        var int i, cx, cy, px, py;
+        let i = 0;
+        while (i < 4) {
+            let cx = posX + PieceData.getX(pieceType, rotation, i);
+            let cy = posY + PieceData.getY(pieceType, rotation, i);
+            if ((cy > -1) & (cy < 20) & (cx > -1) & (cx < 10)) {
+                let px = boardX + (cx * cellSize);
+                let py = boardY + (cy * cellSize);
+                do Screen.setColor(true);
+                do Screen.drawRectangle(px, py, px + 10, py + 10);
+            }
+            let i = i + 1;
+        }
+        return;
+    }
+
+    method void erase() {
+        var int i, cx, cy, px, py;
+        let i = 0;
+        while (i < 4) {
+            let cx = posX + PieceData.getX(pieceType, rotation, i);
+            let cy = posY + PieceData.getY(pieceType, rotation, i);
+            if ((cy > -1) & (cy < 20) & (cx > -1) & (cx < 10)) {
+                let px = boardX + (cx * cellSize);
+                let py = boardY + (cy * cellSize);
+                do Screen.setColor(false);
+                do Screen.drawRectangle(px, py, px + 10, py + 10);
+            }
+            let i = i + 1;
+        }
+        return;
+    }
+
+    method void drawPreview(int previewX, int previewY) {
+        var int i, dx, dy, px, py;
+        let i = 0;
+        while (i < 4) {
+            let dx = PieceData.getX(pieceType, 0, i);
+            let dy = PieceData.getY(pieceType, 0, i);
+            let px = previewX + ((dx + 2) * cellSize);
+            let py = previewY + ((dy + 1) * cellSize);
+            do Screen.setColor(true);
+            do Screen.drawRectangle(px, py, px + 10, py + 10);
+            let i = i + 1;
+        }
+        return;
+    }
+
+    method void erasePreview(int previewX, int previewY) {
+        var int i, dx, dy, px, py;
+        let i = 0;
+        while (i < 4) {
+            let dx = PieceData.getX(pieceType, 0, i);
+            let dy = PieceData.getY(pieceType, 0, i);
+            let px = previewX + ((dx + 2) * cellSize);
+            let py = previewY + ((dy + 1) * cellSize);
+            do Screen.setColor(false);
+            do Screen.drawRectangle(px, py, px + 10, py + 10);
+            let i = i + 1;
+        }
+        return;
+    }
+
+    method boolean moveLeft(Board board) {
+        if (board.canPlace(pieceType, rotation, posX - 1, posY)) {
+            do erase();
+            let posX = posX - 1;
+            do draw();
+            return true;
+        }
+        return false;
+    }
+
+    method boolean moveRight(Board board) {
+        if (board.canPlace(pieceType, rotation, posX + 1, posY)) {
+            do erase();
+            let posX = posX + 1;
+            do draw();
+            return true;
+        }
+        return false;
+    }
+
+    method boolean moveDown(Board board) {
+        if (board.canPlace(pieceType, rotation, posX, posY + 1)) {
+            do erase();
+            let posY = posY + 1;
+            do draw();
+            return true;
+        }
+        return false;
+    }
+
+    method boolean rotate(Board board) {
+        var int newRot;
+        let newRot = rotation + 1;
+        if (newRot = 4) {
+            let newRot = 0;
+        }
+        if (board.canPlace(pieceType, newRot, posX, posY)) {
+            do erase();
+            let rotation = newRot;
+            do draw();
+            return true;
+        }
+        return false;
+    }
+
+    method int hardDrop(Board board) {
+        var int dropped;
+        do erase();
+        let dropped = 0;
+        while (board.canPlace(pieceType, rotation, posX, posY + 1)) {
+            let posY = posY + 1;
+            let dropped = dropped + 1;
+        }
+        do draw();
+        return dropped;
+    }
+}

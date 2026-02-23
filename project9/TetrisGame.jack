@@ -1,0 +1,279 @@
+class TetrisGame {
+    field Board board;
+    field Piece currentPiece;
+    field Piece nextPiece;
+    field int score;
+    field int level;
+    field int totalLines;
+    field boolean gameOver;
+    field int gravityCounter;
+    field int gravityThreshold;
+    field boolean seeded;
+
+    static int previewX;
+    static int previewY;
+
+    constructor TetrisGame new() {
+        let previewX = 180;
+        let previewY = 50;
+
+        do PieceData.init();
+        do Random.init(42);
+
+        let board = Board.new();
+        let score = 0;
+        let level = 1;
+        let totalLines = 0;
+        let gameOver = false;
+        let gravityThreshold = 20;
+        let gravityCounter = 0;
+        let seeded = false;
+
+        let nextPiece = Piece.new(Random.nextBounded(7));
+
+        do drawUI();
+        do spawnPiece();
+
+        return this;
+    }
+
+    method void dispose() {
+        do board.dispose();
+        if (~(currentPiece = null)) {
+            do currentPiece.dispose();
+        }
+        if (~(nextPiece = null)) {
+            do nextPiece.dispose();
+        }
+        do PieceData.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void run() {
+        var int key, prevKey, seedCounter, moveCounter;
+
+        let prevKey = 0;
+        let seedCounter = 0;
+        let moveCounter = 0;
+
+        while (~gameOver) {
+            let key = Keyboard.keyPressed();
+
+            // Seed RNG from timing of first keypress
+            if ((~seeded) & (~(key = 0))) {
+                do Random.init(seedCounter);
+                let seeded = true;
+            }
+            if (~seeded) {
+                let seedCounter = seedCounter + 1;
+            }
+
+            if (~(key = prevKey)) {
+                let moveCounter = 0;
+                if (key = 131) { do currentPiece.rotate(board); }       // up
+                if (key = 32)  { do doHardDrop(); }                     // space
+                if (key = 81)  { let gameOver = true; }                 // Q
+                if (key = 130) { do currentPiece.moveLeft(board); }     // left
+                if (key = 132) { do currentPiece.moveRight(board); }    // right
+                if (key = 133) { do currentPiece.moveDown(board); }     // down
+            } else {
+                // Auto-repeat for held directional keys
+                if ((key = 130) | (key = 132) | (key = 133)) {
+                    let moveCounter = moveCounter + 1;
+                    if (moveCounter > 4) {
+                        let moveCounter = 3;
+                        if (key = 130) { do currentPiece.moveLeft(board); }
+                        if (key = 132) { do currentPiece.moveRight(board); }
+                        if (key = 133) { do currentPiece.moveDown(board); }
+                    }
+                }
+            }
+
+            let prevKey = key;
+
+            let gravityCounter = gravityCounter + 1;
+            if (gravityCounter > gravityThreshold) {
+                let gravityCounter = 0;
+                do applyGravity();
+            }
+
+            do Sys.wait(50);
+        }
+
+        do drawGameOver();
+
+        // Wait for key release then any key to exit
+        while (~(Keyboard.keyPressed() = 0)) {
+            do Sys.wait(50);
+        }
+        while (Keyboard.keyPressed() = 0) {
+            do Sys.wait(50);
+        }
+
+        return;
+    }
+
+    method void doHardDrop() {
+        var int dropped;
+        let dropped = currentPiece.hardDrop(board);
+        do addScore(dropped + dropped);
+        do lockAndSpawn();
+        return;
+    }
+
+    method void applyGravity() {
+        var boolean moved;
+        let moved = currentPiece.moveDown(board);
+        if (~moved) {
+            do lockAndSpawn();
+        }
+        return;
+    }
+
+    method void lockAndSpawn() {
+        var int linesCleared;
+
+        do board.lockPiece(currentPiece.getType(), currentPiece.getRotation(),
+                           currentPiece.getX(), currentPiece.getY());
+
+        let linesCleared = board.clearLines();
+        if (linesCleared > 0) {
+            if (linesCleared = 1) { do addScore(100 * level); }
+            if (linesCleared = 2) { do addScore(300 * level); }
+            if (linesCleared = 3) { do addScore(500 * level); }
+            if (linesCleared = 4) { do addScore(800 * level); }
+
+            let totalLines = totalLines + linesCleared;
+            let level = (totalLines / 10) + 1;
+            if (level > 15) { let level = 15; }
+            let gravityThreshold = 22 - (level + level);
+            if (gravityThreshold < 1) { let gravityThreshold = 1; }
+
+            do drawLines();
+            do drawLevel();
+        }
+        do drawScore();
+
+        if (~(spawnPiece())) {
+            let gameOver = true;
+        }
+
+        return;
+    }
+
+    method boolean spawnPiece() {
+        if (~(currentPiece = null)) {
+            do currentPiece.dispose();
+        }
+
+        let currentPiece = nextPiece;
+        do currentPiece.setPosition(4, 0);
+
+        let nextPiece = Piece.new(Random.nextBounded(7));
+
+        do erasePreviewArea();
+        do nextPiece.drawPreview(previewX, previewY);
+
+        if (~(board.canPlace(currentPiece.getType(), currentPiece.getRotation(),
+                             currentPiece.getX(), currentPiece.getY()))) {
+            return false;
+        }
+
+        do currentPiece.draw();
+        let gravityCounter = 0;
+        return true;
+    }
+
+    // Cap at 32000 to prevent 16-bit overflow
+    method void addScore(int points) {
+        if (score > (32000 - points)) {
+            let score = 32000;
+        } else {
+            let score = score + points;
+        }
+        return;
+    }
+
+    method void erasePreviewArea() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(previewX, previewY, previewX + 59, previewY + 47);
+        return;
+    }
+
+    method void drawUI() {
+        do Screen.clearScreen();
+        do board.drawBorder();
+
+        do Output.moveCursor(0, 3);
+        do Output.printString("TETRIS");
+
+        do Screen.setColor(true);
+        do Screen.drawRectangle(previewX - 1, previewY - 1, previewX + 60, previewY - 1);
+        do Screen.drawRectangle(previewX - 1, previewY + 48, previewX + 60, previewY + 48);
+        do Screen.drawRectangle(previewX - 1, previewY - 1, previewX - 1, previewY + 48);
+        do Screen.drawRectangle(previewX + 60, previewY - 1, previewX + 60, previewY + 48);
+
+        do Output.moveCursor(4, 23);
+        do Output.printString("NEXT");
+
+        do Output.moveCursor(10, 23);
+        do Output.printString("SCORE");
+        do Output.moveCursor(13, 23);
+        do Output.printString("LEVEL");
+        do Output.moveCursor(16, 23);
+        do Output.printString("LINES");
+
+        do Output.moveCursor(19, 23);
+        do Output.printString("MOVE:");
+        do Output.moveCursor(20, 23);
+        do Output.printString("ARROWS");
+        do Output.moveCursor(21, 23);
+        do Output.printString("DROP:SPC");
+        do Output.moveCursor(22, 23);
+        do Output.printString("QUIT:Q");
+
+        do drawScore();
+        do drawLevel();
+        do drawLines();
+
+        return;
+    }
+
+    method void drawScore() {
+        do Output.moveCursor(11, 23);
+        do Output.printString("      ");
+        do Output.moveCursor(11, 23);
+        do Output.printInt(score);
+        return;
+    }
+
+    method void drawLevel() {
+        do Output.moveCursor(14, 23);
+        do Output.printString("   ");
+        do Output.moveCursor(14, 23);
+        do Output.printInt(level);
+        return;
+    }
+
+    method void drawLines() {
+        do Output.moveCursor(17, 23);
+        do Output.printString("     ");
+        do Output.moveCursor(17, 23);
+        do Output.printInt(totalLines);
+        return;
+    }
+
+    method void drawGameOver() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(15, 110, 125, 145);
+        do Screen.setColor(true);
+        do Screen.drawRectangle(15, 110, 125, 110);
+        do Screen.drawRectangle(15, 145, 125, 145);
+        do Screen.drawRectangle(15, 110, 15, 145);
+        do Screen.drawRectangle(125, 110, 125, 145);
+        do Output.moveCursor(11, 2);
+        do Output.printString("GAME OVER");
+        return;
+    }
+}

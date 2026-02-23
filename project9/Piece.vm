@@ -1,0 +1,503 @@
+function Piece.new 0
+    push constant 4
+    call Memory.alloc 1
+    pop pointer 0
+    push constant 10
+    pop static 0
+    push constant 8
+    pop static 1
+    push constant 12
+    pop static 2
+    push argument 0
+    pop this 0
+    push constant 0
+    pop this 1
+    push constant 4
+    pop this 2
+    push constant 0
+    pop this 3
+    push pointer 0
+    return
+function Piece.dispose 0
+    push argument 0
+    pop pointer 0
+    push pointer 0
+    call Memory.deAlloc 1
+    pop temp 0
+    push constant 0
+    return
+function Piece.getType 0
+    push argument 0
+    pop pointer 0
+    push this 0
+    return
+function Piece.getRotation 0
+    push argument 0
+    pop pointer 0
+    push this 1
+    return
+function Piece.getX 0
+    push argument 0
+    pop pointer 0
+    push this 2
+    return
+function Piece.getY 0
+    push argument 0
+    pop pointer 0
+    push this 3
+    return
+function Piece.setPosition 0
+    push argument 0
+    pop pointer 0
+    push argument 1
+    pop this 2
+    push argument 2
+    pop this 3
+    push constant 0
+    return
+function Piece.draw 5
+    push argument 0
+    pop pointer 0
+    push constant 0
+    pop local 0
+label Piece_0
+    push local 0
+    push constant 4
+    lt
+    not
+    if-goto Piece_1
+    push this 2
+    push this 0
+    push this 1
+    push local 0
+    call PieceData.getX 3
+    add
+    pop local 1
+    push this 3
+    push this 0
+    push this 1
+    push local 0
+    call PieceData.getY 3
+    add
+    pop local 2
+    push local 2
+    push constant 1
+    neg
+    gt
+    push local 2
+    push constant 20
+    lt
+    and
+    push local 1
+    push constant 1
+    neg
+    gt
+    and
+    push local 1
+    push constant 10
+    lt
+    and
+    not
+    if-goto Piece_3
+    push static 0
+    push local 1
+    push static 2
+    call Math.multiply 2
+    add
+    pop local 3
+    push static 1
+    push local 2
+    push static 2
+    call Math.multiply 2
+    add
+    pop local 4
+    push constant 1
+    neg
+    call Screen.setColor 1
+    pop temp 0
+    push local 3
+    push local 4
+    push local 3
+    push constant 10
+    add
+    push local 4
+    push constant 10
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    goto Piece_2
+label Piece_3
+label Piece_2
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Piece_0
+label Piece_1
+    push constant 0
+    return
+function Piece.erase 5
+    push argument 0
+    pop pointer 0
+    push constant 0
+    pop local 0
+label Piece_4
+    push local 0
+    push constant 4
+    lt
+    not
+    if-goto Piece_5
+    push this 2
+    push this 0
+    push this 1
+    push local 0
+    call PieceData.getX 3
+    add
+    pop local 1
+    push this 3
+    push this 0
+    push this 1
+    push local 0
+    call PieceData.getY 3
+    add
+    pop local 2
+    push local 2
+    push constant 1
+    neg
+    gt
+    push local 2
+    push constant 20
+    lt
+    and
+    push local 1
+    push constant 1
+    neg
+    gt
+    and
+    push local 1
+    push constant 10
+    lt
+    and
+    not
+    if-goto Piece_7
+    push static 0
+    push local 1
+    push static 2
+    call Math.multiply 2
+    add
+    pop local 3
+    push static 1
+    push local 2
+    push static 2
+    call Math.multiply 2
+    add
+    pop local 4
+    push constant 0
+    call Screen.setColor 1
+    pop temp 0
+    push local 3
+    push local 4
+    push local 3
+    push constant 10
+    add
+    push local 4
+    push constant 10
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    goto Piece_6
+label Piece_7
+label Piece_6
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Piece_4
+label Piece_5
+    push constant 0
+    return
+function Piece.drawPreview 5
+    push argument 0
+    pop pointer 0
+    push constant 0
+    pop local 0
+label Piece_8
+    push local 0
+    push constant 4
+    lt
+    not
+    if-goto Piece_9
+    push this 0
+    push constant 0
+    push local 0
+    call PieceData.getX 3
+    pop local 1
+    push this 0
+    push constant 0
+    push local 0
+    call PieceData.getY 3
+    pop local 2
+    push argument 1
+    push local 1
+    push constant 2
+    add
+    push static 2
+    call Math.multiply 2
+    add
+    pop local 3
+    push argument 2
+    push local 2
+    push constant 1
+    add
+    push static 2
+    call Math.multiply 2
+    add
+    pop local 4
+    push constant 1
+    neg
+    call Screen.setColor 1
+    pop temp 0
+    push local 3
+    push local 4
+    push local 3
+    push constant 10
+    add
+    push local 4
+    push constant 10
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Piece_8
+label Piece_9
+    push constant 0
+    return
+function Piece.erasePreview 5
+    push argument 0
+    pop pointer 0
+    push constant 0
+    pop local 0
+label Piece_10
+    push local 0
+    push constant 4
+    lt
+    not
+    if-goto Piece_11
+    push this 0
+    push constant 0
+    push local 0
+    call PieceData.getX 3
+    pop local 1
+    push this 0
+    push constant 0
+    push local 0
+    call PieceData.getY 3
+    pop local 2
+    push argument 1
+    push local 1
+    push constant 2
+    add
+    push static 2
+    call Math.multiply 2
+    add
+    pop local 3
+    push argument 2
+    push local 2
+    push constant 1
+    add
+    push static 2
+    call Math.multiply 2
+    add
+    pop local 4
+    push constant 0
+    call Screen.setColor 1
+    pop temp 0
+    push local 3
+    push local 4
+    push local 3
+    push constant 10
+    add
+    push local 4
+    push constant 10
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Piece_10
+label Piece_11
+    push constant 0
+    return
+function Piece.moveLeft 0
+    push argument 0
+    pop pointer 0
+    push argument 1
+    push this 0
+    push this 1
+    push this 2
+    push constant 1
+    sub
+    push this 3
+    call Board.canPlace 5
+    not
+    if-goto Piece_13
+    push pointer 0
+    call Piece.erase 1
+    pop temp 0
+    push this 2
+    push constant 1
+    sub
+    pop this 2
+    push pointer 0
+    call Piece.draw 1
+    pop temp 0
+    push constant 1
+    neg
+    return
+    goto Piece_12
+label Piece_13
+label Piece_12
+    push constant 0
+    return
+function Piece.moveRight 0
+    push argument 0
+    pop pointer 0
+    push argument 1
+    push this 0
+    push this 1
+    push this 2
+    push constant 1
+    add
+    push this 3
+    call Board.canPlace 5
+    not
+    if-goto Piece_15
+    push pointer 0
+    call Piece.erase 1
+    pop temp 0
+    push this 2
+    push constant 1
+    add
+    pop this 2
+    push pointer 0
+    call Piece.draw 1
+    pop temp 0
+    push constant 1
+    neg
+    return
+    goto Piece_14
+label Piece_15
+label Piece_14
+    push constant 0
+    return
+function Piece.moveDown 0
+    push argument 0
+    pop pointer 0
+    push argument 1
+    push this 0
+    push this 1
+    push this 2
+    push this 3
+    push constant 1
+    add
+    call Board.canPlace 5
+    not
+    if-goto Piece_17
+    push pointer 0
+    call Piece.erase 1
+    pop temp 0
+    push this 3
+    push constant 1
+    add
+    pop this 3
+    push pointer 0
+    call Piece.draw 1
+    pop temp 0
+    push constant 1
+    neg
+    return
+    goto Piece_16
+label Piece_17
+label Piece_16
+    push constant 0
+    return
+function Piece.rotate 1
+    push argument 0
+    pop pointer 0
+    push this 1
+    push constant 1
+    add
+    pop local 0
+    push local 0
+    push constant 4
+    eq
+    not
+    if-goto Piece_19
+    push constant 0
+    pop local 0
+    goto Piece_18
+label Piece_19
+label Piece_18
+    push argument 1
+    push this 0
+    push local 0
+    push this 2
+    push this 3
+    call Board.canPlace 5
+    not
+    if-goto Piece_21
+    push pointer 0
+    call Piece.erase 1
+    pop temp 0
+    push local 0
+    pop this 1
+    push pointer 0
+    call Piece.draw 1
+    pop temp 0
+    push constant 1
+    neg
+    return
+    goto Piece_20
+label Piece_21
+label Piece_20
+    push constant 0
+    return
+function Piece.hardDrop 1
+    push argument 0
+    pop pointer 0
+    push pointer 0
+    call Piece.erase 1
+    pop temp 0
+    push constant 0
+    pop local 0
+label Piece_22
+    push argument 1
+    push this 0
+    push this 1
+    push this 2
+    push this 3
+    push constant 1
+    add
+    call Board.canPlace 5
+    not
+    if-goto Piece_23
+    push this 3
+    push constant 1
+    add
+    pop this 3
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Piece_22
+label Piece_23
+    push pointer 0
+    call Piece.draw 1
+    pop temp 0
+    push local 0
+    return
